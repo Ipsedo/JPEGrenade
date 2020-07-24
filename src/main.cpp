@@ -21,7 +21,8 @@ int main(int argc, char **argv) {
     std::string jpeg_out_file = argv[2];
 
     std::cout << "Begin JPEG-Grenade creation" << std::endl;
-    std::cout << "Will write " << px_side << "*" << px_side << "px white JPEG in \"" << jpeg_out_file << "\" file" << std::endl;
+    std::cout << "Will write " << px_side << "*" << px_side << "px white JPEG in \""
+        << jpeg_out_file << "\" file" << std::endl;
 
     return 0;
 }
