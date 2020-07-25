@@ -9,19 +9,19 @@
 zigzag_block zigzag_encode(block curr_block) {
     int count = 0;
     std::byte tmp_store[8];
-    zigzag_block res(64, std::byte{0});
+    zigzag_block res;
 
     // Get the First half of the data
     for (int i = 0; i < 7; i++) {
-        if (i == 0) res[count++] = curr_block.values[i][i];
+        if (i == 0) res.values[count++] = curr_block.values[i][i];
 
         if (i > 0) {
             int index = 0;
 
             for (int k = i, col = 0; k >= 0; k--, col++) tmp_store[index++] = curr_block.values[k][col];
 
-            if (i % 2 == 0) for (int k = 0; k < index; k++) res[count++] = tmp_store[k];
-            else  for (int k = index - 1; k >= 0; k--) res[count++] = tmp_store[k];
+            if (i % 2 == 0) for (int k = 0; k < index; k++) res.values[count++] = tmp_store[k];
+            else  for (int k = index - 1; k >= 0; k--) res.values[count++] = tmp_store[k];
         }
     }
 
@@ -31,8 +31,8 @@ zigzag_block zigzag_encode(block curr_block) {
         for (int k = i, col = 7; k < 8; k++, col--) tmp_store[index++] = curr_block.values[k][col];
 
 
-        if (i % 2 == 0) for (int k = 0; k < index; k++) res[count++] = tmp_store[k];
-        else for (int k = index - 1; k >= 0; k--) res[count++] = tmp_store[k];
+        if (i % 2 == 0) for (int k = 0; k < index; k++) res.values[count++] = tmp_store[k];
+        else for (int k = index - 1; k >= 0; k--) res.values[count++] = tmp_store[k];
     }
 
     return res;

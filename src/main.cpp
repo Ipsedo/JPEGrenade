@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 
     zigzag_block zigzag_test = zigzag_encode(test);
 
-    for (auto b : zigzag_test)
+    for (auto b : zigzag_test.values)
         std::cout << std::to_integer<int>(b) << ", ";
     std::cout << std::endl;
 
