@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "markers.h"
+#include "types.h"
 
 void build_header() {
     // TODO build header
