@@ -19,7 +19,7 @@ typedef struct block { std::byte values[8][8]; } block;
 /**
  * Sortie de l'encodage zigzag
  */
-typedef  struct zigzag_block { std::byte values[64]; } zigzag_block;
+typedef struct zigzag_block { std::byte values[64]; } zigzag_block;
 
 /**
  * On définit le type pair_rle :
