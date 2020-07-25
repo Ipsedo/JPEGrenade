@@ -38,7 +38,7 @@ zigzag_block zigzag_encode(block curr_block) {
     return res;
 }
 
-block quantize(block to_quantize, block quant_mtrix){
+block quantize(block curr_block, block quant_mtrix){
     return block();
 }
 
