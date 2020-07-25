@@ -8,8 +8,22 @@
 
 #include "types.h"
 
-block quantize(block to_quantize, block quantize_matrix);
+// 1 : DCT
+block dct(block p_block);
 
-zigzag_block zigzag_encode(block curr_block);
+// 2 : Quantize
+block quantize(block curr_block, block quantize_matrix);
+
+// 3 : Zig-Zag scanning
+zigzag_block zigzag_encode(block q_block);
+
+// 4 : RLE
+rle_block rle(zigzag_block z_block);
+
+// 5 : AC DC
+dc_ac_block dc_ac(rle_block r_block);
+
+// 6 : Huffman
+bits_array huffman(dc_ac_block d_block, huffman_table table);
 
 #endif //JPEGREANDE_ENC_H

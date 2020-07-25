@@ -39,6 +39,21 @@ zigzag_block zigzag_encode(block curr_block) {
 }
 
 block quantize(block to_quantize, block quant_mtrix){
-    block res;
-    return res;
+    return block();
+}
+
+block dct(block p_block) {
+    return block();
+}
+
+rle_block rle(zigzag_block z_block) {
+    return rle_block();
+}
+
+dc_ac_block dc_ac(rle_block r_block) {
+    return dc_ac_block();
+}
+
+bits_array huffman(dc_ac_block d_block, huffman_table table) {
+    return bits_array();
 }
