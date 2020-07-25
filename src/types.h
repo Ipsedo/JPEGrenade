@@ -23,10 +23,10 @@ typedef struct zigzag_block { std::byte values[64]; } zigzag_block;
 
 /**
  * On définit le type pair_rle :
- * unsigned char, un octet dont :
+ * byte, un octet dont :
  * 	- les 4 premier bits représentent le nombre de 0 (Codage RLE sur 0)
  * 	- les 4 dernier bits représentent la magnitude du prochain coefficient non-nul
- * int, le prochain coefficient non-nul
+ * byte, le prochain coefficient non-nul
  */
 typedef std::tuple<std::byte, std::byte> pair_rle;
 
@@ -42,8 +42,8 @@ typedef std::vector<bool> bits_array;
 
 /**
  * On définit un type pair_dc_ac
- * unsigned char : idem que pour pair_rle
- * std::string : la représentation binaire du coefficient DC ou AC
+ * byte : idem que pour pair_rle
+ * bits_array : la représentation binaire du coefficient DC ou AC
  */
 typedef std::tuple<std::byte, bits_array> pair_dc_ac;
 
