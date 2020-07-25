@@ -6,6 +6,10 @@
 
 #include "markers.h"
 
+void build_header() {
+    // TODO build header
+}
+
 int main(int argc, char **argv) {
 
     auto usage_msg = "Wrong arg number, usage :\n"
