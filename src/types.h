@@ -91,6 +91,7 @@ struct node {
  */
 typedef std::unordered_map<std::byte, bits_array> huffman_table;
 typedef std::unordered_map<bits_array, std::byte> inv_huffman_table;
+typedef std::unordered_map<std::byte, double> bytes_freq;
 
 /*
  * Encoded image wrapper

@@ -8,6 +8,7 @@
 #include "types.h"
 #include "enc.h"
 #include "jpeg.h"
+#include "huffman.h"
 
 void build_header() {
     // TODO build header

@@ -12,13 +12,19 @@
  */
 
 // Common JPEG markers https://en.wikipedia.org/wiki/JPEG
+
+
+// Ceux dont on a besoin
+#define PAD 0xFF
+
 #define SOI 0xD8  // Start of image
-#define SOF0 0xC0 // Start of frame (baseline DCT)
-#define SOF2 0xC2 // Start of frame (progressive DCT)
+#define SOF1 0xC1 // Start of frame (baseline DCT)
+#define SOS 0xDA  // Start of scan
+
+
 #define DHT 0xC4  // Define huffman Table(s)
 #define DQT 0xDB  // Quantization Table(s)
 #define DRI 0xDD  // Define restart interval
-#define SOS 0xDA  // Start of scan
 #define RST8 0xD8 // Restart n = 8
 #define APP8 0xE8 // Application specific n = 8
 #define COM 0xFE  // Comment
