@@ -8,6 +8,8 @@
 
 #include "types.h"
 
+block quantize(block to_quantize, block quantize_matrix);
+
 zigzag_block zigzag_encode(block curr_block);
 
 #endif //JPEGREANDE_ENC_H
