@@ -6,20 +6,26 @@
 #ifndef JPEGREANDE_TYPES_H
 #define JPEGREANDE_TYPES_H
 
+#include <memory>
 #include <vector>
 #include <cstddef>
 #include <unordered_map>
+
+/*
+ * Différents types des étapes du pipeline de compression JPEG
+ *
+ */
 
 /**
  * type pour le block 8 * 8 px
  * grey scale
  */
-typedef struct block { std::byte values[8][8]; } block;
+typedef struct block { int values[8][8]; } block;
 
 /**
  * Sortie de l'encodage zigzag
  */
-typedef struct zigzag_block { std::byte values[64]; } zigzag_block;
+typedef struct zigzag_block { int values[64]; } zigzag_block;
 
 /**
  * On définit le type pair_rle :
@@ -52,23 +58,57 @@ typedef std::tuple<std::byte, bits_array> pair_dc_ac;
  */
 typedef std::vector<pair_dc_ac> dc_ac_block;
 
+/*
+ * Huffman types déclaration
+ *
+ */
+
+/**
+ * Template for B-Tree
+ * @tparam T node data
+ */
+template<typename T>
+struct node {
+    double probability;
+    T data;
+
+    std::shared_ptr<node<T>> inf;
+    std::shared_ptr<node<T>> sup;
+
+    /**
+     * Test if the node is a leaf
+     * ie if both children are not defined
+     *
+     * @return if node is leaf
+     */
+    bool is_leaf() {
+        return !inf & !sup;
+    }
+};
+
 /**
  * Huffman tables types def
  */
 typedef std::unordered_map<std::byte, bits_array> huffman_table;
 typedef std::unordered_map<bits_array, std::byte> inv_huffman_table;
 
+/*
+ * Encoded image wrapper
+ * - use for pipeline
+ * - and store image metadata
+ */
+
 /**
  * Grey scale jpeg dans un premier temps
  */
-struct img_white {
+typedef struct img_white {
     int nb_block_w;
     int nb_block_h;
 
     /**
      * 2^16 = 65 536
      * 65 536 / 8 = 8 192
-     * 8 192^2 = 67 108 864 de blocks à générer :)
+     * 8 192^2 = 67 108 864 blocs à générer :)
      *
      * `white_block` à répéter nb_block_w * nb_block_h fois
      */
@@ -78,6 +118,6 @@ struct img_white {
 
     huffman_table huff_table;
     inv_huffman_table inv_huff_table;
-};
+} img_white;
 
 #endif //JPEGREANDE_TYPES_H
