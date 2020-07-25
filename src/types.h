@@ -14,7 +14,7 @@
  * type pour le block 8 * 8 px
  * grey scale
  */
-typedef  std::byte block[8][8];
+typedef std::byte block[8][8];
 
 /**
  * Sortie de l'encodage zigzag
