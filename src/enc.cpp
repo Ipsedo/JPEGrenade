@@ -9,7 +9,7 @@
 zigzag_block zigzag_encode(block curr_block) {
     int count = 0;
     std::byte tmp_store[8];
-    zigzag_block res(64, std::byte(0));
+    zigzag_block res(64, std::byte{0});
 
     // Get the First half of the data
     for (int i = 0; i < 7; i++) {
