@@ -8,9 +8,16 @@
 
 #include <cstddef>
 #include <vector>
+#include <bitset>
 
 #include "types.h"
 
+/**
+ *
+ * @param px_size_x
+ * @param px_size_y
+ * @return
+ */
 std::vector<std::byte> get_jpeg_header(int px_size_x, int px_size_y);
 
 /**
@@ -33,13 +40,51 @@ std::vector<std::byte> get_jpeg_header(int px_size_x, int px_size_y);
  * 3.96Go / 512 = 7.93Mo (lol à vérifier ^⁾
  *
  * @param sample_per_line
- * @param line
+ * @param max_y
+ * @param max_y
+ * @param h
+ * @param v
  * @return
  */
-std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_y, std::bitset<4> h, std::bitset<4> v);
+std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x, std::bitset<4> h, std::bitset<4> v);
 
-std::vector<uint8_t> get_scan_header(uint8_t ns);
+/**
+ *
+ * @param ns
+ * @param nf
+ * @param cs_start
+ * @return
+ */
+std::vector<uint8_t> get_scan_header(uint8_t ns, uint8_t nf, uint8_t cs_start);
 
+/**
+ *
+ * @param img_width
+ * @param img_height
+ * @return
+ */
 std::vector<dc_ac_block> get_black_scan(int img_width, int img_height);
+
+/**
+ *
+ * @param quant_table
+ * @return
+ */
+std::vector<uint8_t> code_quant_table(block quant_table, uint8_t tq);
+
+/**
+ *
+ * @param table
+ * @param tc
+ * @return
+ */
+std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, std::bitset<4> tc, std::bitset<4> th);
+
+/**
+ *
+ * @param table
+ * @return
+ */
+std::vector<uint8_t> code_huffman_table(const huffman_table table);
 
 #endif //JPEGREANDE_JPEG_H

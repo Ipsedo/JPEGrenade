@@ -4,7 +4,11 @@
 //
 
 #include <iostream>
+#include <string>
 #include <bitset>
+#include <numeric>
+#include <algorithm>
+#include <cmath>
 
 #include "jpeg.h"
 #include "markers.h"
@@ -112,4 +116,50 @@ std::vector<dc_ac_block> get_black_scan(int img_width, int img_height) {
     }
 
     return std::vector<dc_ac_block>();
+}
+
+std::vector<uint8_t> code_quant_table(block quant_table, uint8_t tq) {
+    std::vector<uint8_t> quant_table_bytes{PAD, DQT};
+
+    uint16_t lq = 2 + 65 * 8 * 8; // length
+    uint8_t pq = 0;
+
+    quant_table_bytes.insert(quant_table_bytes.end(), {(uint8_t) (lq >> 8u), (uint8_t) lq, pq, tq});
+
+    for (size_t k = 0; k < 8 * 8; k++)
+        quant_table_bytes.push_back((uint8_t) (size_t) quant_table.values[int(floor(k / 8.))][k % 8]);
+
+    return quant_table_bytes;
+}
+
+std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, std::bitset<4> tc, std::bitset<4> th) {
+    std::vector<uint8_t> huffman_table_bytes{PAD, DHT};
+
+    uint16_t lh = 0;
+
+    return huffman_table_bytes;
+}
+
+std::vector<uint8_t> code_huffman_table(huffman_table table) {
+    std::vector<uint16_t> bits;
+    std::vector<uint8_t> keys;
+
+    for (const auto k_v : table) {
+        std::vector<bool> huffman_code = k_v.second;
+        uint8_t value = k_v.first;
+
+        keys.push_back(value);
+
+        auto code_length = (uint16_t) huffman_code.size();
+
+        std::vector<std::string> str_code(huffman_code.size());
+        std::transform(huffman_code.begin(), huffman_code.end(), str_code.begin(), [](bool b){ return b ? "1" : "0"; });
+        std::string code_str = std::accumulate(str_code.begin(), str_code.end(), std::string{});
+
+        code_str += std::string(16 - code_str.size(), '0');
+
+        auto code = (uint16_t) std::bitset<16>(code_str).to_ulong();
+    }
+
+    return std::vector<uint8_t>();
 }

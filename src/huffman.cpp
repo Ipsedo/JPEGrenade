@@ -12,7 +12,7 @@ std::tuple<huffman_table, huffman_table> compute_huffman(std::vector<dc_ac_block
 
     for (auto p_b : d_blocks) {
         pair_dc_ac dc = p_b[0];
-        std::byte magn = std::get<0>(dc);
+        uint8_t magn = std::get<0>(dc);
         bits_array dc_bits = std::get<1>(dc);
 
         if (dc_freq.find(magn) == dc_freq.end())
@@ -23,7 +23,7 @@ std::tuple<huffman_table, huffman_table> compute_huffman(std::vector<dc_ac_block
         dc_ac_block ac_pairs(p_b.begin() + 1, p_b.end());
 
         for (auto ac : ac_pairs) {
-            std::byte zero_n_magn = std::get<0>(ac);
+            uint8_t zero_n_magn = std::get<0>(ac);
             bits_array ac_bits = std::get<1>(ac);
 
             if (ac_freq.find(zero_n_magn) == ac_freq.end())
@@ -34,13 +34,13 @@ std::tuple<huffman_table, huffman_table> compute_huffman(std::vector<dc_ac_block
     }
 
     for (auto k_v : dc_freq) {
-        std::byte key = k_v.first;
+        uint8_t key = k_v.first;
         double count = k_v.second;
         dc_freq[key] = count / dc_freq.size();
     }
 
     for (auto k_v : ac_freq) {
-        std::byte key = k_v.first;
+        uint8_t key = k_v.first;
         double count = k_v.second;
         ac_freq[key] = count / ac_freq.size();
     }

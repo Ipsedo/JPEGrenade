@@ -34,7 +34,7 @@ typedef struct zigzag_block { int values[64]; } zigzag_block;
  * 	- les 4 dernier bits représentent la magnitude du prochain coefficient non-nul
  * byte, le prochain coefficient non-nul
  */
-typedef std::tuple<std::byte, std::byte> pair_rle;
+typedef std::tuple<uint8_t, uint8_t> pair_rle;
 
 /**
  * Sortie de l'encodage RLE
@@ -51,7 +51,7 @@ typedef std::vector<bool> bits_array;
  * byte : idem que pour pair_rle
  * bits_array : la représentation binaire du coefficient DC ou AC
  */
-typedef std::tuple<std::byte, bits_array> pair_dc_ac;
+typedef std::tuple<uint8_t, bits_array> pair_dc_ac;
 
 /**
  * Sortie de l'encodage AC DC  _\m/
@@ -89,9 +89,9 @@ struct node {
 /**
  * Huffman tables types def
  */
-typedef std::unordered_map<std::byte, bits_array> huffman_table;
-typedef std::unordered_map<bits_array, std::byte> inv_huffman_table;
-typedef std::unordered_map<std::byte, double> bytes_freq;
+typedef std::unordered_map<uint8_t, bits_array> huffman_table;
+typedef std::unordered_map<bits_array, uint8_t> inv_huffman_table;
+typedef std::unordered_map<uint8_t, double> bytes_freq;
 
 /*
  * Encoded image wrapper
