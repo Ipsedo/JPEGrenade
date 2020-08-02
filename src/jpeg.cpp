@@ -17,21 +17,21 @@ std::vector<std::byte> get_jpeg_header(int px_size_x, int px_size_y) {
     return std::vector<std::byte>();
 }
 
-std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x, std::bitset<4> h, std::bitset<4> v) {
+std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x, uint8_t h, uint8_t v) {
 
-    if (h.to_ulong() < 1 || 4 < h.to_ulong()) {
+    if (h < 1u || 4u < h) {
         std::cout << "Frame horizontal scale factor must be [1 - 4], "
-                     "actual = " << h.to_ulong() << std::endl;
+                     "actual = " << h << std::endl;
         exit(1);
     }
 
-    if (v.to_ulong() < 1 || 4 < v.to_ulong()) {
+    if (v < 1u || 4u < v) {
         std::cout << "Frame vertical scale factor must be [1 - 4], "
-                     "actual = " << v.to_ulong() << std::endl;
+                     "actual = " << v << std::endl;
         exit(1);
     }
 
-    if (nf < 1) {
+    if (nf < 1u) {
         std::cout << "Number of image component in frame must be > 1, "
                      "actual = " << nf << std::endl;
         exit(1);
@@ -43,8 +43,8 @@ std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x
         exit(1);
     }
 
-    uint16_t lf = 8 + 3 * nf;
-    uint8_t p = 8; // RGB [0 - 255]
+    uint16_t lf = 8u + 3u * nf;
+    uint8_t p = 8u; // RGB [0 - 255]
 
     std::vector<uint8_t> header
     {PAD, SOF1,
@@ -55,7 +55,8 @@ std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x
      nf
     };
 
-    auto h_v_i = (uint8_t) ((h.to_ulong() << 4u) + v.to_ulong());
+    h <<= 4u;
+    uint8_t h_v_i = h | v;
     for (size_t i = 0; i < nf; i++) {
         uint8_t c_i = i;
         uint8_t t_q_i = 0; // Quant table ID
@@ -95,10 +96,11 @@ std::vector<uint8_t> get_scan_header(uint8_t ns, uint8_t nf, uint8_t cs_start) {
     uint8_t ss = 0;
     uint8_t se = 63;
 
-    std::bitset<4> ah("0000");
-    std::bitset<4> al("0000");
+    uint8_t ah = 0uL << 4u;
+    uint8_t al = 0uL;
+    uint8_t ah_al = ah | al;
 
-    header.insert(header.end(), {ss, se, (uint8_t) ((ah.to_ulong() << 4u) + al.to_ulong())});
+    header.insert(header.end(), {ss, se, ah_al});
 
     return header;
 }
@@ -132,7 +134,7 @@ std::vector<uint8_t> code_quant_table(block quant_table, uint8_t tq) {
     return quant_table_bytes;
 }
 
-std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, std::bitset<4> tc, std::bitset<4> th) {
+std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, uint8_t tc, uint8_t th) {
     std::vector<uint8_t> huffman_table_bytes{PAD, DHT};
 
     uint16_t lh = 0;
@@ -140,7 +142,7 @@ std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, std::b
     return huffman_table_bytes;
 }
 
-std::vector<uint8_t> code_huffman_table(huffman_table table) {
+std::vector<uint8_t> code_huffman_table(const huffman_table table) {
     std::vector<uint16_t> bits;
     std::vector<uint8_t> keys;
 

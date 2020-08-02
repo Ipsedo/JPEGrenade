@@ -46,7 +46,7 @@ std::vector<std::byte> get_jpeg_header(int px_size_x, int px_size_y);
  * @param v
  * @return
  */
-std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x, std::bitset<4> h, std::bitset<4> v);
+std::vector<uint8_t> get_frame_header(uint8_t nf, uint16_t max_y, uint16_t max_x, uint8_t h, uint8_t v);
 
 /**
  *
@@ -78,7 +78,7 @@ std::vector<uint8_t> code_quant_table(block quant_table, uint8_t tq);
  * @param tc
  * @return
  */
-std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, std::bitset<4> tc, std::bitset<4> th);
+std::vector<uint8_t> code_huffman_table_syntax(const huffman_table table, uint8_t tc, uint8_t th);
 
 /**
  *
